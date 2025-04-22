@@ -3310,8 +3310,8 @@ var ViewHook = class {
   __updated() {
     this.updated && this.updated();
   }
-  __beforeUpdate() {
-    this.beforeUpdate && this.beforeUpdate();
+  __beforeUpdate(fromEl, toEl) {
+    this.beforeUpdate && this.beforeUpdate(fromEl, toEl);
   }
   __destroyed() {
     this.destroyed && this.destroyed();
@@ -3769,7 +3769,7 @@ var View = class _View {
     let hook = this.getHook(fromEl);
     let isIgnored = hook && dom_default.isIgnored(fromEl, this.binding(PHX_UPDATE));
     if (hook && !fromEl.isEqualNode(toEl) && !(isIgnored && isEqualObj(fromEl.dataset, toEl.dataset))) {
-      hook.__beforeUpdate();
+      hook.__beforeUpdate(fromEl, toEl);
       return hook;
     }
   }
